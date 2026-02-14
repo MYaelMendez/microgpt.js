@@ -5,6 +5,13 @@
  * Maintains zero-dependency philosophy by using pure JavaScript and markdown-based skill definitions.
  * 
  * Skills are optional extensions that users can load at their discretion.
+ * 
+ * SECURITY WARNING: Skills execute arbitrary JavaScript code without sandboxing.
+ * Only load skills from trusted, audited sources. Consider implementing checksum
+ * verification or code signing for production use. Future versions could add:
+ * - Checksum/signature verification for skills
+ * - Restricted execution context (VM2-like sandboxing)
+ * - Permission-based skill capabilities
  */
 
 import fs from 'fs';

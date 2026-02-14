@@ -204,9 +204,11 @@ for (let step = 0; step < num_steps; ++step) {
   const loss = sum(losses).mul(1 / n); // final average loss over the document sequence. May yours be low.
 
   // Validate model state after forward pass (skills hook)
+  // Note: probs is not passed here to keep validation lightweight during training.
+  // For probability distribution validation, pass the probs array from the last position.
   const validations = skillsCapacitor.executeHooks('validate', {
     loss: loss.data,
-    probs: null, // Could pass probs here if needed
+    probs: null, // Set to probs array if probability distribution validation is needed
     step
   });
 

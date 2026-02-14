@@ -22,7 +22,10 @@ const hookFunction = (context) => {
   const violations = [];
 
   // Configuration constants
-  const PROB_SUM_TOLERANCE = 0.01; // Acceptable deviation from 1.0 for probability sums
+  // PROB_SUM_TOLERANCE: 1% tolerance accounts for floating-point arithmetic errors
+  // and the softmax normalization. For stricter validation, use 1e-6, but this may
+  // trigger false positives due to accumulated floating-point errors in the chain.
+  const PROB_SUM_TOLERANCE = 0.01;
 
   // Check 1: Loss should be finite and positive
   if (loss && (isNaN(loss) || !isFinite(loss) || loss < 0)) {

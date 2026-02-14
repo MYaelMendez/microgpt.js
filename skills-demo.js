@@ -28,7 +28,7 @@ console.log('\n--- Validation Demo ---');
 console.log('\nValidating normal model state:');
 const normalValidation = skillsCapacitor.executeHooks('validate', {
   loss: 2.5,
-  probs: [0.1, 0.2, 0.3, 0.4],
+  probs: [{ data: 0.1 }, { data: 0.2 }, { data: 0.3 }, { data: 0.4 }], // Value-like objects
   step: 100,
   params: new Array(1000),
   vocab_size: 27,
@@ -50,7 +50,7 @@ normalValidation.forEach(({ skill, result }) => {
 console.log('\nValidating invalid model state (NaN loss):');
 const invalidValidation = skillsCapacitor.executeHooks('validate', {
   loss: NaN,
-  probs: [0.1, 0.2, 0.3, 0.4],
+  probs: [{ data: 0.1 }, { data: 0.2 }, { data: 0.3 }, { data: 0.4 }], // Value-like objects
   step: 100
 });
 

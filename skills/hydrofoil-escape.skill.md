@@ -36,7 +36,8 @@ const hookFunction = (context) => {
   // Only check if both prev_loss and current_loss are valid numbers
   if (prev_loss !== undefined && prev_loss !== null && 
       current_loss !== undefined && current_loss !== null &&
-      !isNaN(prev_loss) && !isNaN(current_loss)) {
+      !isNaN(prev_loss) && !isNaN(current_loss) &&
+      prev_loss !== 0) {  // Avoid division by zero
     const lossRatio = current_loss / prev_loss;
     if (lossRatio > MAX_LOSS_RATIO || lossRatio < MIN_LOSS_RATIO) {
       driftChecks.lossDrift = true;

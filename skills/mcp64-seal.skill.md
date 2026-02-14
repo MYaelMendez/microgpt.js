@@ -63,7 +63,11 @@ const hookFunction = (context) => {
   };
   
   // Simple checksum (in production, would use cryptographic hash)
-  const checksum = Object.values(sealData).reduce((acc, val) => acc + (typeof val === 'number' ? val : val.length), 0);
+  const checksum = Object.values(sealData).reduce((acc, val) => {
+    if (typeof val === 'number') return acc + val;
+    if (typeof val === 'string' && val.length !== undefined) return acc + val.length;
+    return acc; // Skip non-numeric, non-string values
+  }, 0);
   
   return {
     sealed: true,
