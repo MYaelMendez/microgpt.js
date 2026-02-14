@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroGPT</title>
+    <style>
+        /* Add styles for dual topology design */
+        body {
+            display: flex;
+            justify-content: space-between;
+            height: 100vh;
+            margin: 0;
+        }
+        .side {
+            width: 48%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .left {
+            background-color: #f4f4f4;
+        }
+        .right {
+            background-color: #eaeaea;
+        }
+        /* Add animations */
+        .animated {
+            transition: transform 0.3s;
+        }
+        .animated:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="side left animated">
+        <h1>MicroGPT Left Side</h1>
+        <p>This is the left side of the dual topology.</p>
+    </div>
+    <div class="side right animated">
+        <h1>MicroGPT Right Side</h1>
+        <p>This is the right side of the dual topology.</p>
+    </div>
+    <script>
+        // Add interactive scripts here
+        document.querySelector('.left').addEventListener('click', function() {
+            alert('Left side clicked!');
+        });
+        document.querySelector('.right').addEventListener('click', function() {
+            alert('Right side clicked!');
+        });
+    </script>
+</body>
+</html>
