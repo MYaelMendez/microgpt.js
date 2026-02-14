@@ -20,6 +20,12 @@ Checks for drift conditions before proceeding with inference.
 const hookFunction = (context) => {
   const { step, prev_loss, current_loss, temperature } = context;
   
+  // Configuration constants
+  const MAX_LOSS_RATIO = 3.0;      // Maximum acceptable loss increase
+  const MIN_LOSS_RATIO = 0.3;      // Minimum acceptable loss decrease (30% of previous)
+  const MAX_TEMPERATURE = 2.0;     // Maximum safe temperature value
+  const MAX_STEP_LIMIT = 5000;     // Emergency step limit
+  
   const driftChecks = {
     lossDrift: false,
     temperatureDrift: false,
@@ -32,18 +38,18 @@ const hookFunction = (context) => {
       current_loss !== undefined && current_loss !== null &&
       !isNaN(prev_loss) && !isNaN(current_loss)) {
     const lossRatio = current_loss / prev_loss;
-    if (lossRatio > 3.0 || lossRatio < 0.3) {
+    if (lossRatio > MAX_LOSS_RATIO || lossRatio < MIN_LOSS_RATIO) {
       driftChecks.lossDrift = true;
     }
   }
   
   // Check for extreme temperature values
-  if (temperature !== undefined && (temperature <= 0 || temperature > 2.0)) {
+  if (temperature !== undefined && (temperature <= 0 || temperature > MAX_TEMPERATURE)) {
     driftChecks.temperatureDrift = true;
   }
   
   // Emergency step limit
-  if (step > 5000) {
+  if (step > MAX_STEP_LIMIT) {
     driftChecks.stepLimit = true;
   }
   
@@ -75,14 +81,18 @@ Validates current state and determines if escape is needed.
 const hookFunction = (context) => {
   const { loss, step, sample_idx } = context;
   
+  // Configuration constants
+  const LOSS_EXPLOSION_THRESHOLD = 100;     // Loss value indicating explosion
+  const MAX_STEP_LIMIT = 10000;             // Maximum training/inference steps
+  
   const escapeConditions = [];
   
   // Condition 1: Loss explosion
-  if (loss && loss > 100) {
+  if (loss && loss > LOSS_EXPLOSION_THRESHOLD) {
     escapeConditions.push({
       type: 'loss_explosion',
       value: loss,
-      threshold: 100
+      threshold: LOSS_EXPLOSION_THRESHOLD
     });
   }
   
@@ -95,11 +105,11 @@ const hookFunction = (context) => {
   }
   
   // Condition 3: Excessive iterations
-  if (step && step > 10000) {
+  if (step && step > MAX_STEP_LIMIT) {
     escapeConditions.push({
       type: 'step_limit_exceeded',
       value: step,
-      threshold: 10000
+      threshold: MAX_STEP_LIMIT
     });
   }
   

@@ -39,6 +39,10 @@ The skills-enabled version demonstrates how to integrate modular extensions like
 
 The Skills Capacitor is a lightweight framework for extending `microgpt.js` with modular, auditable skill definitions. Skills are defined in markdown files and can hook into the training and inference loops without adding dependencies.
 
+### ⚠️ Security Warning
+
+**Skills execute arbitrary JavaScript code.** Only load skills from trusted, audited sources. Always review skill code before loading. Never load skills from untrusted sources without thorough code review. See [SKILLS.md](SKILLS.md) for details.
+
 ### Features
 
 - **Modular**: Skills are independent, self-contained extensions

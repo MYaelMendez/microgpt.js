@@ -2,6 +2,17 @@
 
 The Skills Capacitor is a modular framework for extending `microgpt.js` with lightweight, auditable skill definitions. It enables developers to add custom behaviors, validations, and monitoring to the inference loop while maintaining the project's zero-dependency philosophy.
 
+## ⚠️ Security Warning
+
+**Skills execute arbitrary JavaScript code within your application context.** Before loading skills:
+
+1. **Always review skill code** before loading from any source
+2. **Never load skills from untrusted sources** without thorough code review
+3. **Skills have full access** to model parameters and application state
+4. **Consider the risk** when loading skills in production environments
+
+Skills are meant for trusted, audited code only. The Skills Capacitor provides no sandboxing or code execution restrictions.
+
 ## Philosophy
 
 - **Modular**: Skills are independent, self-contained units of functionality

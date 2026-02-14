@@ -108,10 +108,14 @@ class SkillsCapacitor {
     const skill = new Skill(name, version, description, metadata);
 
     // Parse and register hooks from code blocks
+    // SECURITY WARNING: Skills execute arbitrary JavaScript code.
+    // Only load skills from trusted, audited sources. Skills have full access
+    // to the application context and can execute any code.
     for (const [section, code] of Object.entries(codeBlocks)) {
       try {
         // Create a function from the code block
         // The code should export a function that matches the hook signature
+        // This uses new Function() which executes the code - ensure skills are trusted!
         const hookFn = new Function('context', code + '\nreturn hookFunction;')();
         
         // Map section names to hook names

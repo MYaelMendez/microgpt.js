@@ -21,6 +21,9 @@ const hookFunction = (context) => {
   const { loss, probs, step } = context;
   const violations = [];
 
+  // Configuration constants
+  const PROB_SUM_TOLERANCE = 0.01; // Acceptable deviation from 1.0 for probability sums
+
   // Check 1: Loss should be finite and positive
   if (loss && (isNaN(loss) || !isFinite(loss) || loss < 0)) {
     violations.push({
@@ -33,10 +36,10 @@ const hookFunction = (context) => {
   // Check 2: Probabilities should sum to ~1.0
   if (probs && Array.isArray(probs)) {
     const probSum = probs.reduce((sum, p) => sum + (p.data || p), 0);
-    if (Math.abs(probSum - 1.0) > 0.01) {
+    if (Math.abs(probSum - 1.0) > PROB_SUM_TOLERANCE) {
       violations.push({
         type: 'prob_sum_invalid',
-        message: `Probability sum is ${probSum}, expected ~1.0`,
+        message: `Probability sum is ${probSum}, expected ~1.0 (tolerance: ${PROB_SUM_TOLERANCE})`,
         severity: 'warning'
       });
     }

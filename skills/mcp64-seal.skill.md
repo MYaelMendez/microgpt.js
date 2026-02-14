@@ -20,13 +20,14 @@ Called before each inference step to validate sovereignty.
 const hookFunction = (context) => {
   const { step, token_id, pos_id } = context;
   
-  // Sovereignty check: validate we're operating within bounds
-  const maxSteps = 10000;
-  const maxBlockSize = 32;
+  // Sovereignty bounds - configurable limits for authorized operation
+  // These should match or exceed the actual model parameters (block_size, num_steps)
+  const MAX_STEPS = 10000;      // Maximum authorized training/inference steps
+  const MAX_BLOCK_SIZE = 32;    // Maximum authorized sequence length
   
   const checks = {
-    stepBound: step < maxSteps,
-    positionBound: pos_id < maxBlockSize,
+    stepBound: step < MAX_STEPS,
+    positionBound: pos_id < MAX_BLOCK_SIZE,
     tokenValid: token_id !== undefined && token_id >= 0,
     timestamp: Date.now()
   };
