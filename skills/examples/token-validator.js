@@ -30,6 +30,7 @@ export class TokenValidatorSkill extends Skill {
       }
 
       // Check for invalid token IDs (sovereignty check)
+      // Note: In real usage, you should also check against vocab_size as upper bound
       for (const token of data) {
         if (typeof token !== 'number' || token < 0) {
           valid = false;

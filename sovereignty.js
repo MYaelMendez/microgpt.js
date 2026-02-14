@@ -87,7 +87,8 @@ export class RequiredFieldsValidator extends Validator {
     }
 
     for (const field of this.fields) {
-      if (!(field in data) || data[field] === undefined || data[field] === null) {
+      // Check if field exists and is not null/undefined
+      if (!(field in data) || data[field] == null) {
         valid = false;
         issues.push({
           severity: this.severity,

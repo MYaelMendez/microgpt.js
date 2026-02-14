@@ -209,8 +209,8 @@ export class MicroGPTPlatform {
    */
   setSovereigntyMode(enabled) {
     this.config.enableSovereignty = enabled;
-    const validators = this.validationEngine.getValidators();
-    for (const validator of validators) {
+    // Update actual validator instances, not just their info
+    for (const validator of this.validationEngine.validators) {
       if (validator.name.includes('sovereignty')) {
         validator.enabled = enabled;
       }

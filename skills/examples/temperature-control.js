@@ -19,6 +19,12 @@ export class TemperatureControlSkill extends Skill {
     this.maxTemperature = config.maxTemperature || 1.0;
   }
 
+  /**
+   * Adjust temperature dynamically based on context
+   * @param {Array} logits - Model output logits (Value objects with .div() method)
+   * @param {Object} context - Generation context with position info
+   * @returns {Array} Temperature-scaled logits
+   */
   async postProcess(logits, context) {
     // Adjust temperature based on context
     // For example, lower temperature at the end of sequences
@@ -30,7 +36,7 @@ export class TemperatureControlSkill extends Skill {
     const temperature = this.baseTemperature * (1 - 0.3 * positionRatio);
     const adjustedTemp = Math.max(this.minTemperature, Math.min(this.maxTemperature, temperature));
     
-    // Apply temperature scaling
+    // Apply temperature scaling (logits are Value objects from microgpt.js)
     return logits.map(l => l.div(adjustedTemp));
   }
 }

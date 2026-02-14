@@ -94,6 +94,9 @@ export class PositionalEmbedding {
 
   /**
    * Generate sinusoidal positional encoding
+   * Following the "Attention is All You Need" paper (Vaswani et al., 2017)
+   * PE(pos, 2i) = sin(pos / 10000^(2i/d_model))
+   * PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
    * @private
    */
   _generatePositionalEncoding() {

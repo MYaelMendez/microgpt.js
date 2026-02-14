@@ -44,9 +44,13 @@ export class EmbeddingSimilaritySkill extends Skill {
       const queryEmbedding = this.embedder.encode(context.partialText);
       const similar = this.store.search(queryEmbedding, 3, 'cosine');
       
+      // Convert similarity threshold to distance threshold
+      // (cosine distance = 1 - cosine similarity)
+      const distanceThreshold = 1 - this.similarityThreshold;
+      
       // Boost logits for characters that appear in similar examples
       // This is a simple demonstration - more sophisticated approaches possible
-      if (similar.length > 0 && similar[0].distance < (1 - this.similarityThreshold)) {
+      if (similar.length > 0 && similar[0].distance < distanceThreshold) {
         // Similarity found, could use this to guide generation
         context.similarityHint = similar[0].key;
       }
