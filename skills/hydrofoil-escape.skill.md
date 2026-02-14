@@ -27,7 +27,10 @@ const hookFunction = (context) => {
   };
   
   // Check for sudden loss spikes (drift detection)
-  if (prev_loss !== undefined && current_loss !== undefined) {
+  // Only check if both prev_loss and current_loss are valid numbers
+  if (prev_loss !== undefined && prev_loss !== null && 
+      current_loss !== undefined && current_loss !== null &&
+      !isNaN(prev_loss) && !isNaN(current_loss)) {
     const lossRatio = current_loss / prev_loss;
     if (lossRatio > 3.0 || lossRatio < 0.3) {
       driftChecks.lossDrift = true;

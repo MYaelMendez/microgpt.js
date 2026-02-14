@@ -240,7 +240,6 @@ for (let step = 0; step < num_steps; ++step) {
   
   prev_loss = loss.data;
 }
-}
 
 // Inference: may the model babble back to us
 const temperature = 0.5; // in (0, 1], control the "creativity" of generated text, low to high
