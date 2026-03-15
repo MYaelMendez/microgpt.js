@@ -1,0 +1,15 @@
+{
+  "name": "length-limiter",
+  "description": "Limits output length to prevent excessive generation",
+  "priority": 50,
+  "enabled": true,
+  "config": {
+    "maxLength": 20,
+    "warningThreshold": 15
+  },
+  "metadata": {
+    "author": "microgpt.js",
+    "version": "1.0.0",
+    "tags": ["validation", "safety"]
+  }
+}
